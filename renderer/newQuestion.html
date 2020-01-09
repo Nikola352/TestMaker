@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Novo pitanje</title>
+    <link rel="stylesheet" href="./css/newQuestion.css">
+  </head>
+  <body>
+    <h1>Ново питање</h1>
+
+    <div class="podaci">
+
+      <div class="predmet">
+        <label>Предмет: </label>
+        <input type="text" class="predmet">
+      </div>
+      <div>
+        <label>Област: </label>
+        <input type="text" class="oblast">
+      </div>
+      <div>
+        <label for="">Текст питања: </label>
+        <textarea name="pitanje" rows="10" cols="45"></textarea>
+      </div>
+      <div>
+        <label for="">Број понуђених одговора: </label>
+        <input type="number" class="brOdgovora" value=0>
+      </div>
+      <table class="odgovori">
+
+      </table>
+      <div>
+        <img src="../assets/default.png" alt="default picture">
+        <div class="image-buttons">
+          <button class="slika">Одабери слику</button>
+          <button class="vrati-sliku">Уклони слику</button>
+        </div>
+      </div>
+      <div>
+        <label for="">Број бодова: </label>
+        <input type="number" class="brBodova" value="5">
+      </div>
+      <button class="save">Сачувај</button>
+
+    </div>
+
+    <script src="./js/newQuestion.js"></script>
+  </body>
+</html>

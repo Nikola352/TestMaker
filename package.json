@@ -1,0 +1,21 @@
+{
+  "name": "testmaker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "install-app-deps"
+  },
+  "author": "Nikola Jolovic",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.1.7",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "knex": "^0.20.6",
+    "sqlite3": "^4.1.1"
+  }
+}

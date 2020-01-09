@@ -1,0 +1,96 @@
+body{
+  background-color: #00a2e8;
+  font-family: sans-serif;
+  color: #def5ff;
+}
+
+h1{
+  text-align: center;
+}
+
+div.podaci{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 30px;
+  grid-column-gap: 20px;
+  margin: 21px;
+}
+
+label{
+  display: block;
+}
+
+div.predmet{
+  margin: auto 20%;
+}
+
+input[type="text"], textarea{
+  background-color :#def5ff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+}
+
+img{
+  max-width: 100%;
+  width: 250px;
+  height: 200px;
+}
+
+td input[type="text"]{
+  width: 20em;
+  padding: 4px;
+}
+
+button.slika, button.vrati-sliku{
+  display: inline;
+  margin: 0;
+  width: 120px;
+  margin-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+button.vrati-sliku{
+  display: none;
+}
+
+input[type="checkbox"]{
+  -webkit-transform: scale(2);
+  margin: auto 10px;
+  background-color: aliceblue;
+}
+
+button{
+  background: linear-gradient(#70b0ff,#0053b9);
+  border: 2px solid #70b0ff;
+  color: #def5ff;
+  border-radius: 5px;
+}
+
+button:hover{
+  background: linear-gradient(#0053b9, #70b0ff);
+}
+
+input[type="number"]{
+  background-color: #70b0ff;
+  border: 1px solid #0053b9;
+  padding: 5px;
+  width: 3em;
+  font-size: 20px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+button.save{
+  width: 200px;
+  font-size: 20px;
+  margin: auto 25px;
+  padding: 10px;
+}
+
+textarea{
+  font-size: 15px;
+  font-family: inherit;
+  resize: none;
+}
