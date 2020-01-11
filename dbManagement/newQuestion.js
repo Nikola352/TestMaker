@@ -24,8 +24,25 @@ function createWindow(parentWin){
   return win;
 }
 
-function newQuestion(){
-  continue;
+function newQuestion(knex, podaci, win){
+  const {dialog} = require('electron');
+
+  knex('Pitanja').insert(podaci).into('Pitanja')
+  .then(function(rows) {
+    console.log(rows);
+  })
+  .catch(function(err) {
+    if(err) throw err;
+  });
+
+  dialog.showMessageBoxSync(win, {
+    type: 'info',
+    title: 'Сачувано',
+    message: 'Питање је успјешно сачувано у бази података'
+  });
+
+  win.close();
+  win = null;
 }
 
 module.exports =

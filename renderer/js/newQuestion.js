@@ -17,11 +17,15 @@ $('input.brOdgovora').on('change', function(){
     $('<td>').text(slova[i]+')').appendTo($row);
     $('<td>').append(
       $('<input type="text">')
+        .attr('id', i+1)
+        .on('keydown', deflectEvent)
     ).append(
       $('<input type="checkbox">').attr('name', slova[i])
     ).appendTo($row);
     $odgTable.append($row);
   }
+
+
 });
 
 $('button.slika').on('click', function(e){
@@ -46,3 +50,49 @@ function handleFirstTab(e){
 }
 
 window.addEventListener('keydown', handleFirstTab);
+
+deflectEvent = function(event) {
+    var n = $('input.brOdgovora').val();
+    if(event.keyCode === 38) {
+      if($(this).attr('id') == 1){
+        $('#'+n).focus();
+      } else {
+        $('#'+($(this).attr('id')-1)).focus();
+      }
+    }
+    if(event.keyCode === 40){
+      if($(this).attr('id') == n){
+        $('#'+1).focus();
+      } else {
+        $('#'+($(this).attr('id')-(-1))).focus();
+      }
+    }
+}
+
+$('#save').on('click', function(){
+  var podaci = {
+    textPitanja: $('textarea.pitanje').val(),
+    odgovori: '',
+    tacniOdgovori: '',
+    predmet: $('input.predmet').val(),
+    oblast: $('input.oblast').val(),
+    slika: $('img').attr('src'),
+    brojBodova: Number($('input.brBodova').val())
+  }
+  for(var i=0; i<$('input.brOdgovora').val(); i++){
+    podaci.odgovori += $('#'+(i+1)).val() + '&|&';
+    if($('input[name="'+slova[i]+'"]').is(':checked')){
+      podaci.tacniOdgovori += slova[i];
+    }
+  }
+
+  console.log(podaci);
+  if(podaci.predmet==='' || podaci.oblast===''
+    || podaci.textPitanja==='' || podaci.odgovori===''
+    || podaci.tacniOdgovori==='' || podaci.brojBodova<=0){
+    ipc.send('new-question-error');
+  } else{
+    ipc.send('add-new-question', podaci);
+  }
+
+});

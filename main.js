@@ -5,6 +5,13 @@ const path = require('path');
 const newQuestion = require('./dbManagement/newQuestion');
 const viewQuestion = require('./dbManagement/viewQuestion');
 const createTest = require('./dbManagement/createTest');
+const knex = require('knex')({
+  client: 'sqlite3',
+  connection:{
+    filename: 'data.sqlite3'
+  },
+  useNullAsDefault: true
+});
 
 var win = {
   mainWin: null,
@@ -61,6 +68,14 @@ ipc.on('choose-picture', function(e, arg){
     console.log('Error here: ', err);
   });
 
+});
+
+ipc.on('new-question-error', function(){
+  dialog.showErrorBox('Грешка', 'Молим попуните сва поља исправно');
+});
+
+ipc.on('add-new-question', function(e, arg) {
+  newQuestion.newQuestion(knex, arg, win.newQuestWin);
 });
 
 app.on('ready', createMainWindow);
