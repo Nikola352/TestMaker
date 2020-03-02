@@ -2,9 +2,30 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/viewQuestion.css">
     <title>Pogledaj pitanje</title>
   </head>
   <body>
     <h1>Погледај питање</h1>
+
+    <div class="search">
+      <input type="text" id="search">
+      <input type="image" id="searchBtn" src="../assets/search.png">
+    </div>
+
+    <div class="filters">
+      <label class="predmet">Предмет: </label>
+      <select class="predmet">
+        <option value="">Било који</option>
+      </select>
+      <label class="oblast">Област: </label>
+      <select class="oblast">
+        <option value="">Било која</option>
+      </select>
+    </div>
+
+    <div class="pitanja"></div>
+
+    <script src="./js/viewQuestion.js"></script>
   </body>
 </html>

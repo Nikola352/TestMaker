@@ -46,7 +46,7 @@ ipc.on('open-newQuest-process', function(e){
 });
 
 ipc.on('open-viewQuest-process', function(e){
-  win.viewQuestWin = viewQuestion.createWindow();
+  win.viewQuestWin = viewQuestion.createWindow(win.mainWin);
 });
 
 ipc.on('open-createTest-process', function(e){
@@ -77,6 +77,22 @@ ipc.on('new-question-error', function(){
 ipc.on('add-new-question', function(e, arg) {
   newQuestion.newQuestion(knex, arg, win.newQuestWin);
 });
+
+ipc.on('get-question-data', function(e, arg){
+  viewQuestion.getData(knex, e, arg);
+});
+
+ipc.on('get-subj-data', function(e){
+  viewQuestion.getSubj(knex, e);
+});
+
+ipc.on('remove-question', function(e, arg){
+  viewQuestion.removeQuestion(knex, arg, win.viewQuestWin);
+});
+
+ipc.on('update-question', function(e, arg){
+  viewQuestion.updateQuestion(knex, arg.id, arg.podaci, win.viewQuestWin);
+})
 
 app.on('ready', createMainWindow);
 

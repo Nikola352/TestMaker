@@ -24,8 +24,6 @@ $('input.brOdgovora').on('change', function(){
     ).appendTo($row);
     $odgTable.append($row);
   }
-
-
 });
 
 $('button.slika').on('click', function(e){
@@ -86,7 +84,6 @@ $('#save').on('click', function(){
     }
   }
 
-  console.log(podaci);
   if(podaci.predmet==='' || podaci.oblast===''
     || podaci.textPitanja==='' || podaci.odgovori===''
     || podaci.tacniOdgovori==='' || podaci.brojBodova<=0){
