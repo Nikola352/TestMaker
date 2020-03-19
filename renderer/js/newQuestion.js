@@ -87,7 +87,7 @@ $('#save').on('click', function(){
   if(podaci.predmet==='' || podaci.oblast===''
     || podaci.textPitanja==='' || podaci.odgovori===''
     || podaci.tacniOdgovori==='' || podaci.brojBodova<=0){
-    ipc.send('new-question-error');
+    ipc.send('input-error');
   } else{
     ipc.send('add-new-question', podaci);
   }

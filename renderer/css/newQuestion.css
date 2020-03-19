@@ -11,9 +11,10 @@ h1{
 div.podaci{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-row-gap: 30px;
+  grid-row-gap: 20px;
   grid-column-gap: 20px;
   margin: 21px;
+  margin-bottom: 0;
 }
 
 label{
@@ -33,12 +34,12 @@ input[type="text"], textarea{
 
 img{
   max-width: 100%;
-  width: 250px;
-  height: 200px;
+  width: 290px;
+  height: 230px;
 }
 
 td input[type="text"]{
-  width: 20em;
+  width: 17em;
   padding: 4px;
 }
 
@@ -59,6 +60,7 @@ input[type="checkbox"]{
   -webkit-transform: scale(2);
   margin: auto 10px;
   background-color: aliceblue;
+  display: inline-block;
 }
 
 button{

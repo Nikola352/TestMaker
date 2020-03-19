@@ -4,7 +4,8 @@ const ipc = electron.ipcMain;
 const path = require('path');
 const newQuestion = require('./dbManagement/newQuestion');
 const viewQuestion = require('./dbManagement/viewQuestion');
-const createTest = require('./dbManagement/createTest');
+const studentM = require('./dbManagement/studentManagement');
+// database
 const knex = require('knex')({
   client: 'sqlite3',
   connection:{
@@ -13,18 +14,19 @@ const knex = require('knex')({
   useNullAsDefault: true
 });
 
+// Windows
 var win = {
   mainWin: null,
   newQuestWin: null,
   viewQuestWin: null,
-  createTestWin: null,
-  viewTestWin: null
+  studentWin: null,
+  startTestWin: null,
 }
 
 function createMainWindow(){
   win.mainWin = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 750,
+    height: 590,
     show: false,
     webPreferences: {
       nodeIntegration: true
@@ -41,6 +43,9 @@ function createMainWindow(){
   });
 }
 
+
+// IPC handlers
+
 ipc.on('open-newQuest-process', function(e){
   win.newQuestWin = newQuestion.createWindow(win.mainWin);
 });
@@ -49,8 +54,8 @@ ipc.on('open-viewQuest-process', function(e){
   win.viewQuestWin = viewQuestion.createWindow(win.mainWin);
 });
 
-ipc.on('open-createTest-process', function(e){
-  win.createTestWin = createTest.createWindow();
+ipc.on('open-student-process', function(e){
+  win.studentWin = studentM.createWindow(win.mainWin);
 });
 
 ipc.on('choose-picture', function(e, arg){
@@ -70,7 +75,7 @@ ipc.on('choose-picture', function(e, arg){
 
 });
 
-ipc.on('new-question-error', function(){
+ipc.on('input-error', function(){
   dialog.showErrorBox('Грешка', 'Молим попуните сва поља исправно');
 });
 
@@ -92,7 +97,55 @@ ipc.on('remove-question', function(e, arg){
 
 ipc.on('update-question', function(e, arg){
   viewQuestion.updateQuestion(knex, arg.id, arg.podaci, win.viewQuestWin);
+});
+
+ipc.on('get-class-data', function(e){
+  studentM.getClasses(knex, e);
+});
+
+ipc.on('add-class', function(e, arg){
+  studentM.addClass(knex, arg, win.studentWin);
 })
+
+ipc.on('remove-class', function(e, arg){
+  studentM.removeClass(knex, arg, win.studentWin);
+});
+
+ipc.on('add-student', function(e, arg){
+  studentM.addStudent(knex, arg, win.studentWin);
+});
+
+ipc.on('get-student-data', function(e, arg){
+  studentM.studentInfo(knex, arg, win.studentWin);
+});
+
+ipc.on('remove-student', function(e, arg){
+  studentM.removeStudent(knex, arg, win.studentWin);
+});
+
+ipc.on('update-student', function(e, arg){
+  studentM.updateStudent(knex, arg.id, arg.podaci, win.studentWin);
+});
+
+ipc.on('view-student-results', function(e, arg){
+  studentM.showTestResults(knex, arg, win.studentWin);
+});
+
+ipc.on('switch-view', function(e, arg){
+  if(arg.view==='students'){
+    win.studentWin.loadFile('./renderer/students.html')
+      .then(function(){
+        win.studentWin.webContents.send('class-name', arg.class)
+      });
+  }
+  else if(arg.view==='classes'){
+    win.studentWin.loadFile('./renderer/classes.html');
+  }
+
+});
+
+
+// Application lifecycle
 
 app.on('ready', createMainWindow);
 

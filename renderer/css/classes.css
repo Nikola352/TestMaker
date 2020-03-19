@@ -1,0 +1,93 @@
+body{
+  background-color: #00a2e8;
+  font-family: sans-serif;
+  color: #def5ff;
+}
+
+h1{
+  height: 15%;
+  text-align: center;
+}
+
+#odjeljenja{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  height: 50vh;
+  overflow: auto;
+}
+
+#odjeljenja .odjeljenje{
+  flex-grow: 1;
+  flex-basis: 150px;
+  height: 80px;
+  background-color: #4bb5ff;
+  text-align: center;
+  border: none;
+  margin: 2%;
+  color: inherit;
+  font-size: 1.4em;
+}
+
+#odjeljenja .odjeljenje:hover{
+  background-color: #007acf;
+  cursor: pointer;
+}
+
+#novi-razred input, p{
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+#novi-razred input[type="text"]{
+  height: 2.5em;
+  width: 4em;
+  font-size: 1.5em;
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: auto;
+}
+
+#novi-razred input[type="text"]::placeholder{
+  font-size: 70%;
+}
+
+#novi-razred p{
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+}
+
+input[type="button"]{
+  background: linear-gradient(#70b0ff,#0053b9);
+  border: 2px solid #70b0ff;
+  color: #def5ff;
+  border-radius: 5px;
+  width: 4em;
+  height: 2.5em;
+  font-size: 1.5em;
+  margin: auto 5%;
+  margin-right: 0;
+}
+
+input[type="button"]:hover{
+  background: linear-gradient(#0053b9, #70b0ff);
+}
+
+#ukloniRazred{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 2%;
+}
+
+#odjeljenja .red-hover:hover{
+  background-color: red;
+}
+
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus {
+  outline: none;
+}

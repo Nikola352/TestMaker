@@ -9,12 +9,8 @@ document.getElementById('viewQuestBtn').addEventListener('click', function(){
   ipc.send('open-viewQuest-process');
 });
 
-document.getElementById('createTestBtn').addEventListener('click', function(){
-  ipc.send('open-createTest-process');
-});
-
-document.getElementById('viewTestBtn').addEventListener('click', function(){
-  ipc.send('open-viewTest-process');
+document.getElementById('studentsBtn').addEventListener('click', function(){
+  ipc.send('open-student-process');
 });
 
 document.getElementById('startTestBtn').addEventListener('click', function(){
