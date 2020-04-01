@@ -12,15 +12,17 @@
 
       <div class="predmet">
         <label>Предмет: </label>
-        <input type="text" class="predmet">
+        <input type="text" class="predmet" list="predmet-list">
+        <datalist id="predmet-list"></datalist>
       </div>
-      <div>
+      <div class="oblast">
         <label>Област: </label>
-        <input type="text" class="oblast">
+        <input type="text" class="oblast" list="oblast-list">
+        <datalist id="oblast-list"></datalist>
       </div>
       <div>
         <label for="">Текст питања: </label>
-        <textarea class="pitanje" rows="11" cols="40"></textarea>
+        <textarea class="pitanje" rows="10" cols="40"></textarea>
       </div>
       <div>
         <label for="">Број понуђених одговора: </label>
@@ -40,7 +42,9 @@
         <label for="">Број бодова: </label>
         <input type="number" class="brBodova" value="5">
       </div>
-      <button id="save">Сачувај</button>
+      <div>
+        <button id="save">Сачувај</button>
+      </div>
 
     </div>
 

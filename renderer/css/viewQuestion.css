@@ -16,13 +16,13 @@ input[type="text"], textarea{
 }
 
 #search{
-  width: 600px;
+  width: 93%;
 }
 
 #searchBtn{
   width: 20px;
   height: 20px;
-  margin-left: 5px;
+  margin-left: 4px;
 }
 
 input[type="image"]{
@@ -37,15 +37,15 @@ div.search{
 
 textarea{
   font-family: inherit;
-  align-self: flex-start;
   margin: 5% auto;
+  resize: none;
 }
 
 img{
   max-width: 100%;
   width: 300px;
   height: 240px;
-  margin: 5%;
+  margin: 5% auto;
   border-radius: 5%;
 }
 
@@ -98,9 +98,18 @@ input[type="number"]{
   left: 50%;
 }
 
-.filters .predmet, .filters .oblast{
+.filters .predmet{
   position: relative;
   left: 20%;
+}
+
+.filters .oblast{
+  position: absolute;
+  right: 20%;
+}
+
+label.oblast{
+  margin-right: 88px;
 }
 
 .filters select{
@@ -109,8 +118,7 @@ input[type="number"]{
 }
 
 table{
-  margin: 5%;
-  margin-top: 0;
+  margin: 0 auto 5% auto;
 }
 
 body:not(.user-is-tabbing) button:focus,

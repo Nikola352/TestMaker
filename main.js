@@ -79,6 +79,10 @@ ipc.on('input-error', function(){
   dialog.showErrorBox('Грешка', 'Молим попуните сва поља исправно');
 });
 
+ipc.on('invalid-number', function() {
+  dialog.showErrorBox('Грешка', 'Унесите број између 1 и 30');
+})
+
 ipc.on('add-new-question', function(e, arg) {
   newQuestion.newQuestion(knex, arg, win.newQuestWin);
 });

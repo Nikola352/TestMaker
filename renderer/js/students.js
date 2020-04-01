@@ -138,8 +138,14 @@ ipc.on('student-info', function(e, ucenici){
   }
 })
 
-$('#back').on('click', function(){
-  ipc.send('switch-view', {view: 'classes'});
+$('#back')
+  .hover(function() {
+    $(this).attr('src', '../assets/back_active.png');
+  }, function(){
+    $(this).attr('src', '../assets/back.png');
+  })
+  .on('click', function(){
+    ipc.send('switch-view', {view: 'classes'});
 });
 
 $('#dodajUcenika').on('click', function() {

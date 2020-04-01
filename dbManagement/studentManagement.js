@@ -4,6 +4,7 @@ function createWindow(parentWin){
   var win = new BrowserWindow({
     width: 720,
     height: 750,
+    minWidth: 400,
     parent: parentWin,
     modal: true,
     show: false,

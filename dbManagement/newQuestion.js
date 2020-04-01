@@ -2,11 +2,11 @@ function createWindow(parentWin){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
-    width: 755,
-    height: 800,
+    width: 730,
+    height: 785,
     parent: parentWin,
     modal: true,
-    resizable: false,
+    //resizable: false,
     show: false,
     webPreferences: {
       nodeIntegration: true
@@ -29,20 +29,20 @@ function newQuestion(knex, podaci, win){
 
   knex('Pitanja').insert(podaci).into('Pitanja')
   // unesi pitanje u bazu
-  .then(function(rows) { // kada je unijeto
+  .then(function(rows1) { // kada je unijeto
 
     knex('Pitanja').select('*').where('predmet','=',podaci.predmet)
     .then(function(rows){
       if(rows.length <= 1){
         // ako je prvo pitanje iz predmeta
-        // unesi u bazu predmeta
+        // unesi predmet u bazu predmeta
         knex('Predmeti').insert({
           predmet: podaci.predmet,
           oblasti: podaci.oblast
         })
         .into('Predmeti')
-        .then(function(rows) {
-          console.log(rows);
+        .then(function() {
+          null;
         })
         .catch(function(err) {
           if(err) throw err;

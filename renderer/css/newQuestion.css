@@ -6,6 +6,7 @@ body{
 
 h1{
   text-align: center;
+  margin: 0;
 }
 
 div.podaci{
@@ -13,16 +14,13 @@ div.podaci{
   grid-template-columns: 1fr 1fr;
   grid-row-gap: 20px;
   grid-column-gap: 20px;
-  margin: 21px;
+  width: 95vw;
+  margin: 2.5vw;
   margin-bottom: 0;
 }
 
 label{
   display: block;
-}
-
-div.predmet{
-  margin: auto 20%;
 }
 
 input[type="text"], textarea{
@@ -34,8 +32,8 @@ input[type="text"], textarea{
 
 img{
   max-width: 100%;
-  width: 290px;
-  height: 230px;
+  width: 300px;
+  height: 240px;
 }
 
 td input[type="text"]{
@@ -84,17 +82,22 @@ input[type="number"]{
   border-radius: 5px;
 }
 
-button.save{
-  width: 200px;
-  font-size: 20px;
-  margin: auto 25px;
-  padding: 10px;
+#save{
+  display: inline-block;
+  font-size: 2em;
+  margin: auto;
+  padding: 2%;
 }
 
 textarea{
   font-size: 15px;
   font-family: inherit;
   resize: none;
+}
+
+input.predmet, input.oblast{
+  border-right: 2px solid #aaa;
+  border-left: 2px solid #e9e9e9
 }
 
 body:not(.user-is-tabbing) button:focus,

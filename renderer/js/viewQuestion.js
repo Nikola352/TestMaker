@@ -67,6 +67,8 @@ function backToDisabled($div){
     // disable all input elems
     $(this).attr('disabled', 'disabled');
   });
+
+  $div.find('img').unbind('click');
 }
 
 function updateQuestion() {
@@ -76,6 +78,14 @@ function updateQuestion() {
     // enable all input elems
     $(this).removeAttr('disabled');
   });
+  $div.find('img').on('click', function(){
+    ipc.send('choose-picture');
+  });
+
+  ipc.on('picture-path-ready', function(e, arg) {
+    $div.find('img').attr('src', arg);
+  })
+
   var id = $div.attr("class").split(/\s+/)[0];
 
   $div.find('input.remove')
@@ -107,6 +117,7 @@ function updateQuestion() {
         tacniOdgovori: '',
         predmet: $div.find('.questInfo.predmet').val(),
         oblast: $div.find('.questInfo.oblast').val(),
+        slika: $div.find('img').attr('src'),
         brojBodova: Number($div.find('input.brBodova').val())
       }
 
@@ -210,7 +221,6 @@ function displayQuestions() {
       $(this).attr('src','../assets/remove.png');
     });
   }
-  console.log(DATA);
 }
 
 ipc.on('subj-data', function(e, arg){
@@ -222,14 +232,11 @@ ipc.on('subj-data', function(e, arg){
   }
 
   for(var i=0; i<predmeti.length; i++){
-    if(predmeti.indexOf(predmeti[i]) === i){
-      // only first occurence
       $('<option>')
       .attr('value', predmeti[i])
       .text(predmeti[i])
       .appendTo($('select.predmet'));
     }
-  }
 });
 
 ipc.on('quest-data', function(e, arg){
