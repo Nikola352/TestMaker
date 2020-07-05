@@ -1,0 +1,52 @@
+body{
+    margin: auto 3%;
+}
+
+h1{
+  text-align: center;
+}
+
+#rezultati div.test > p{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+#rezultati div.test{
+  background-color: #0095d6bb;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+#rezultati div.test > p > span{
+  margin: 5px 5% 5px 5%;
+}
+
+#rezultati  input[type="image"]{
+  width: 25px;
+  align-self: center;
+  position: absolute;
+  right: 10px;
+}
+
+#rezultati div.drop-down{
+    display: none;
+}
+
+#rezultati img{
+  width: 200px;
+}
+
+#rezultati  div.test > div.drop-down > div{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-left: 5%;
+  margin-bottom: 20px;
+}
+
+#rezultati  ul{
+  list-style-type: none;
+}

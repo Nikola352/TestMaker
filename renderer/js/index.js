@@ -16,12 +16,3 @@ document.getElementById('studentsBtn').addEventListener('click', function(){
 document.getElementById('startTestBtn').addEventListener('click', function(){
   ipc.send('open-startTest-process');
 });
-
-function handleFirstTab(e){
-  if(e.keyCode === 9){
-    document.body.classList.add('user-is-tabbing');
-    window.removeEventListener('keydown', handleFirstTab);
-  }
-}
-
-window.addEventListener('keydown', handleFirstTab);

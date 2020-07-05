@@ -1,0 +1,145 @@
+*{
+  font-size: 107%;
+}
+
+label{
+  display: block;
+  margin-top: 5vh;
+  margin-bottom: 0.5vh;
+}
+
+label.predmet, label.odjeljenje{
+  margin-top: 0;
+}
+
+div.test-info{
+  width: 48%;
+  float: left;
+  margin: 1%;
+  padding: 0;
+}
+
+div.student-info{
+  width: 48%;
+  float: right;
+  margin: 1%;
+  padding: 0;
+}
+
+select{
+  background-color: #def5ff;
+  border-radius: 4px;
+  outline: none;
+  width: 40%;
+  padding: 2px;
+
+}
+
+div{
+  text-align: center;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+}
+
+
+li{
+  background-color: #0095d699;
+  margin: 1vh;
+  padding: 1vh;
+  cursor: default;
+}
+
+li.selected{
+  background-color: #0083cd;
+}
+
+li:hover{
+  background-color: #0074c5;
+}
+
+ul.oblasti{
+  height: 30vh;
+}
+
+ul.ucenici{
+  height: 40vh;
+}
+
+input.br-pitanja, input.port{
+  background-color: #def5ff;
+  padding: 5px;
+  font-size: 20px;
+  margin: 5px;
+  border: 1px solid #a9a9a9;
+  border-radius: 4px;
+  text-align: center;
+}
+
+input.br-pitanja{
+  width: 2.2em;
+}
+
+input.port{
+  display: block;
+  margin: auto;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+div.duration{
+  background-color: #def5ff;
+  color: black;
+  width: 5em;
+  margin: auto;
+  padding: 3px;
+  border-radius: 4px;
+  border: 1px solid #a9a9a9;
+}
+
+.duration input{
+  background-color: inherit;
+  border: none;
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+}
+
+.duration input.min{
+  text-align: right;
+}
+
+.duration input.sec{
+  text-align: left;
+}
+
+ul.ucenici{
+  margin-bottom: 3vh;
+}
+
+.server button{
+  background: linear-gradient(#70b0ff,#0053b9);
+  border: 2px solid #70b0ff;
+  color: #def5ff;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 3vh;
+  font-size: 4.6vh;
+  width: 30vw;
+}
+
+.server button:hover{
+  background: linear-gradient(#0053b9, #70b0ff);
+}
+
+input[type="number"]{
+  font-size: 4vh;
+}

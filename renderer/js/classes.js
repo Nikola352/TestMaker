@@ -63,12 +63,7 @@ function ukloniRazred(){
 $('#ukloniRazred').on('click', ukloniRazred);
 
 function keyPress(e){
-  if(e.keyCode === 9){
-    // enable tab
-    document.body.classList.add('user-is-tabbing');
-    window.removeEventListener('keydown', handleFirstTab);
-  } else if(e.keyCode === 13){
-    // enter
+  if(e.keyCode === 13){ // enter
     if($('input[name="odjeljenjeIn"]').is(':focus')
       || $('input[name="razredIn"]').is(':focus')){
         $('#dodajRazred').trigger('click');

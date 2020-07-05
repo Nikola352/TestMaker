@@ -1,9 +1,3 @@
-body{
-  background-color: #00a2e8;
-  font-family: sans-serif;
-  color: #def5ff;
-}
-
 h1{
   height: 15%;
   text-align: center;
@@ -85,9 +79,4 @@ input[type="button"]:hover{
 
 #odjeljenja .red-hover:hover{
   background-color: red;
-}
-
-body:not(.user-is-tabbing) button:focus,
-body:not(.user-is-tabbing) input:focus {
-  outline: none;
 }

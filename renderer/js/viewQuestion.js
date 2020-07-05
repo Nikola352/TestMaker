@@ -38,8 +38,11 @@ $('#searchBtn').on('click', function(){
 function removeQuestion() {
   var id = $(this).parent().attr("class").split(/\s+/)[0];
   ipc.send('remove-question', id);
-  ipc.send('get-question-data', FILTERS);
 }
+
+ipc.on('question-removed', function(e) {
+  ipc.send('get-question-data', FILTERS);
+});
 
 function backToDisabled($div){
   $div.find('input.edit')
@@ -202,11 +205,13 @@ function displayQuestions() {
     }
     $div.append($odgTable);
 
+    var $bodDiv = $('<div>').addClass('bod');
     $('<input type="number">')
       .addClass('brBodova')
       .val(row['brojBodova'])
       .attr('disabled', 'disabled')
-      .appendTo($div);
+      .appendTo($bodDiv);
+    $div.append($bodDiv);
 
     $container.append($div);
 
@@ -268,11 +273,7 @@ ipc.on('quest-data', function(e, arg){
 });
 
 function keyPress(e){
-  if(e.keyCode === 9){
-    // enable tab
-    document.body.classList.add('user-is-tabbing');
-    window.removeEventListener('keydown', handleFirstTab);
-  } else if(e.keyCode === 13){
+  if(e.keyCode === 13){
     if($('#search').is(':focus')){
       FILTERS.text = $('#search').val();
       ipc.send('get-question-data', FILTERS);

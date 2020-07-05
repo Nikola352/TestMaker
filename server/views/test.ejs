@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/css/test.css">
+    <title>Test</title>
+  </head>
+  <body>
+    <p class="timer">
+      <span class="min"><%= duration.min %></span>
+      <span class="colon">:</span>
+      <span class="sec"><%= duration.sec %></span>
+    </p>
+
+    <div class="questions">
+
+      <% questions.forEach((question, index)=>{ %>
+        <div class="question" data-id="<%= question.id %>">
+          <p><span><%= index+1 %>)  </span><%= question.textPitanja %></p>
+
+          <p>бр. бодова: <%= question.brojBodova %></p>
+
+          <table class="odgovori">
+            <% var slova = "абвгдђежзијклљмнњопрстћуфхцчџш";
+            question.odgovori.forEach((odg, i)=>{ %>
+              <tr>
+                <td><%= slova[i] + ')' %></td>
+                <td class="ans"><label><%= odg %></label></td>
+                <td><input type="checkbox" value="<%= slova[i]%>"></td>
+              </tr>
+            <% }); %>
+          </table>
+
+          <img src="<%= question.slika.substr(9) %>">
+        </div>
+
+      <% }) %>
+
+    </div>
+
+    <button id="end">Заврши тест</button>
+
+
+    <script src="js/jquery-3.4.1.min.js" type="application/javascript"></script>
+    <script src="/socket.io/socket.io.js" type="application/javascript"></script>
+    <script src="js/test.js" type="application/javascript"></script>
+  </body>
+</html>

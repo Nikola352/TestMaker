@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/startTest.css">
+    <link rel="stylesheet" href="./css/all.css">
+    <title>Pocni test</title>
+  </head>
+  <body>
+    <div class="test-info">
+      <label class="predmet">Предмет:</label>
+      <select class="predmet"></select>
+
+      <label class="oblasti">Области/Лекције:</label>
+      <ul class="oblasti"></ul>
+
+      <label class="br-pitanja">Број питања: </label>
+      <input type="number" class="br-pitanja" value="10" min="0">
+
+      <label class="duration">Трајање теста (mm:ss):</label>
+      <div class="duration">
+        <input type="number" class="min" value="45" min="0">
+        <span>:</span>
+        <input type="number" class="sec" value="00" min="0" max="59">
+      </div>
+    </div>
+
+    <div class="student-info">
+      <label class="odjeljenje">Одјељење: </label>
+      <select class="odjeljenje"></select>
+
+      <label for="ucenici">Ученици: </label>
+      <ul class="ucenici"></ul>
+    </div>
+
+    <div class="server">
+      <label calss="port">Порт: </label>
+      <input type="number" class="port" value="7000" min="1025" max="65535">
+
+      <button type="button" class="start-server">Покрени сервер</button>
+    </div>
+
+    <script src="./js/startTest.js"></script>
+    <script src="./js/all.js"></script>
+  </body>
+</html>

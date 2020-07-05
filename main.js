@@ -2,9 +2,11 @@ const electron = require('electron');
 const {app, BrowserWindow, dialog} = electron;
 const ipc = electron.ipcMain;
 const path = require('path');
+const events = require('events');
 const newQuestion = require('./dbManagement/newQuestion');
 const viewQuestion = require('./dbManagement/viewQuestion');
 const studentM = require('./dbManagement/studentManagement');
+const testM = require('./server/test');
 // database
 const knex = require('knex')({
   client: 'sqlite3',
@@ -58,6 +60,10 @@ ipc.on('open-student-process', function(e){
   win.studentWin = studentM.createWindow(win.mainWin);
 });
 
+ipc.on('open-startTest-process', function(e){
+  win.startTestWin = testM.createWindow(win.mainWin);
+})
+
 ipc.on('choose-picture', function(e, arg){
   dialog.showOpenDialog(win.newQuestWin, {
     title: 'Izaberi sliku',
@@ -96,7 +102,10 @@ ipc.on('get-subj-data', function(e){
 });
 
 ipc.on('remove-question', function(e, arg){
-  viewQuestion.removeQuestion(knex, arg, win.viewQuestWin);
+  viewQuestion.removeQuestion(knex, arg, win.viewQuestWin)
+    .then(function(info){
+      e.reply('question-removed');
+    });
 });
 
 ipc.on('update-question', function(e, arg){
@@ -120,11 +129,11 @@ ipc.on('add-student', function(e, arg){
 });
 
 ipc.on('get-student-data', function(e, arg){
-  studentM.studentInfo(knex, arg, win.studentWin);
+  studentM.studentInfo(knex, arg, win);
 });
 
 ipc.on('remove-student', function(e, arg){
-  studentM.removeStudent(knex, arg, win.studentWin);
+  studentM.removeStudent(knex, arg.id, arg.razred, win.studentWin);
 });
 
 ipc.on('update-student', function(e, arg){
@@ -136,17 +145,35 @@ ipc.on('view-student-results', function(e, arg){
 });
 
 ipc.on('switch-view', function(e, arg){
-  if(arg.view==='students'){
+  if(arg.view === 'students'){
     win.studentWin.loadFile('./renderer/students.html')
       .then(function(){
         win.studentWin.webContents.send('class-name', arg.class)
       });
   }
-  else if(arg.view==='classes'){
+  else if(arg.view === 'classes'){
     win.studentWin.loadFile('./renderer/classes.html');
   }
-
 });
+
+// event emitter which handles different phases during exam
+testEmitter = new events.EventEmitter();
+
+ipc.on('start-server', function(e, arg){
+  testM.startTest(arg, testEmitter, knex, win.startTestWin);
+});
+
+ipc.on('start-test', function(){
+  testEmitter.emit('start-test');
+});
+
+ipc.on('end-test', function(){
+  testEmitter.emit('end-test');
+});
+
+ipc.on('print-login-info', function(e, arg){
+  testM.printLoginInfo(arg, win.startTestWin);
+})
 
 
 // Application lifecycle

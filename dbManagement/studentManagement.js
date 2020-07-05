@@ -99,7 +99,11 @@ function studentInfo(knex, className, win) {
     .where('razred', '=', className)
     .orderBy('prezime')
     .then(function(rows){
-      win.webContents.send('student-info', rows);
+      try {
+        win.studentWin.webContents.send('student-info', rows);
+      } catch (e) {
+        win.startTestWin.webContents.send('student-info', rows);
+      }
     })
     .catch(function(err){
       if(err) throw err;
@@ -122,9 +126,23 @@ function addStudent(knex, podaci, win){
     .catch(function(err){
       if(err) throw err;
     });
+
+  // uvecaj broj ucenika u razredu za 1
+  knex('Razredi').select('*')
+    .where('razred','=',podaci.razred)
+    .then(function(rows){
+      knex('Razredi')
+        .where('razred','=',podaci.razred)
+        .update({brUcenika: Number(rows[0]['brUcenika'])+1})
+        .then(function(){null})
+        .catch(function(err){if(err)throw err;});
+    })
+    .catch(function(err) {
+      if(err) throw err;
+    });
 }
 
-function removeStudent(knex, id, win){
+function removeStudent(knex, id, razred, win){
   const {dialog} = require('electron');
 
   var res = dialog.showMessageBoxSync(win, {
@@ -150,6 +168,20 @@ function removeStudent(knex, id, win){
       }).catch(function(err){
         if(err) throw err;
       });
+
+      // umanji broj ucenika u razredu za 1
+      knex('Razredi').select('*')
+        .where('razred','=',razred)
+        .then(function(rows){
+          knex('Razredi')
+            .where('razred','=',razred)
+            .update({brUcenika: Number(rows[0]['brUcenika'])-1})
+            .then(function(){null})
+            .catch(function(err){if(err)throw err;});
+        })
+        .catch(function(err) {
+          if(err) throw err;
+        });
   }
 }
 
@@ -169,9 +201,37 @@ function updateStudent(knex, id, podaci, win){
     .catch(function(){if(err) throw err;});
 }
 
-function showTestResults(knex, id, win){
-  // TODO: Open a new window with student's test results
-  null;
+function showTestResults(knex, id, parentWin){
+  const {BrowserWindow} = require('electron');
+
+  var win = new BrowserWindow({
+    width: 585,
+    height: 600,
+    parent: parentWin,
+    modal: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+
+  win.setMenuBarVisibility(false);
+
+  win.loadFile('./renderer/student-results.html')
+  .then(()=>{
+    knex('Ucenici')
+      .select('rezultati')
+      .where('id', '=', id)
+      .then(rows=>{
+        var results = rows[0].rezultati.split('&||&').slice(0,-1).reverse();
+        for(var i=0; i<results.length; i++){
+          results[i] = JSON.parse(results[i]);
+        }
+        win.webContents.send('student-results', results);
+      }).catch(err=>{if(err) console.log(err);});
+  }).catch(err => {
+    if(err) console.log(err);
+  })
+
 }
 
 module.exports = {

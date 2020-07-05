@@ -1,10 +1,4 @@
-body{
-  background-color: #00a2e8;
-  font-family: sans-serif;
-}
-
 h1{
-  color: #def5ff;
   text-align: center;
   font-size: 3em;
 }
@@ -20,13 +14,8 @@ div.buttons{
 .buttons button{
   background-color: #4bb5ff;
   border: none;
-  color: #def5ff;
   font-size: 2.5em;
-}
-
-body:not(.user-is-tabbing) button:focus,
-body:not(.user-is-tabbing) input:focus {
-  outline: none;
+  color: #def5ff;
 }
 
 .buttons button:hover{

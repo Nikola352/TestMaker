@@ -12,7 +12,7 @@ ipc.on('class-name', function(e, raz){
 
 function removeStudent(){
   var id = $(this).parent().attr('class').substr(2);
-  ipc.send('remove-student', id);
+  ipc.send('remove-student', {id:id, razred:RAZRED});
   ipc.send('get-student-data', RAZRED);
 }
 
@@ -171,11 +171,7 @@ $('#dodajUcenika').on('click', function() {
 
 
 function keyPress(e){
-  if(e.keyCode === 9){
-    // enable tab
-    document.body.classList.add('user-is-tabbing');
-    window.removeEventListener('keydown', handleFirstTab);
-  } else if(e.keyCode === 13){
+  if(e.keyCode === 13){
     // enter
     if($('#novi-ucenik input').is(':focus')){
       $('#dodajUcenika').trigger('click');

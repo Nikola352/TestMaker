@@ -88,6 +88,9 @@ function removeLesson(knex, predmet, oblast){
 
 function removeQuestion(knex, id, win){
   const {dialog} = require('electron');
+  const fs = require('fs');
+  const path = require('path');
+  const process = require('process');
 
   var res = dialog.showMessageBoxSync(win, {
     type: 'question',
@@ -100,45 +103,63 @@ function removeQuestion(knex, id, win){
   if(res===0){
     // korisnik je pritisnuo 'Да'
 
-    // odredi predmet i oblast pitanja
-    var OBLAST, PREDMET;
-    knex('Pitanja').select('*')
-      .where('id', '=', id)
-      .then(function(rows) {
-        PREDMET = rows[0]['predmet'];
-        OBLAST = rows[0]['oblast'];
-      })
-      .catch(function(err) {
-        if(err) throw err;
-      })
+    return new Promise(function(resolve, reject) {
+      // odredi predmet i oblast pitanja
+      var OBLAST, PREDMET;
+      knex('Pitanja').select('*')
+        .where('id', '=', id)
+        .then(function(rows) {
+          PREDMET = rows[0]['predmet'];
+          OBLAST = rows[0]['oblast'];
 
-    knex('Pitanja')
-      .where('id','=',id)
-      .del()
-      .then(function(){
-        // Prikazi poruku o uspjesnoj akciji
-        dialog.showMessageBox(win, {
-          type: 'info',
-          title: 'Обрисано',
-          message: 'Питање је успјешно уклоњено из базе података'
+          // obrisi pitanje iz baze
+          knex('Pitanja')
+            .where('id','=',id)
+            .del()
+            .then(function(){
+              // Prikazi poruku o uspjesnoj akciji
+              dialog.showMessageBox(win, {
+                type: 'info',
+                title: 'Обрисано',
+                message: 'Питање је успјешно уклоњено из базе података'
+              });
+
+              // pronadji sva pitanja iz iste oblasti
+              knex('Pitanja')
+                .select('predmet', 'oblast').from('Pitanja')
+                .where('oblast', '=', OBLAST)
+                .then(function(r1){
+                  if(r1.length === 0){
+                    // ako je poslednje pitanje iz oblasti/lekcije
+                    removeLesson(knex, PREDMET, OBLAST);
+                  }
+                  resolve('returned');
+                })
+            })
+            .catch(function(err){
+              if(err) throw err;
+            });
+        })
+        .catch(function(err) {
+          if(err) throw err;
         });
 
-        // pronadji sva pitanja iz iste oblasti
-        knex('Pitanja')
-          .select('predmet', 'oblast').from('Pitanja')
-          .where('oblast', '=', OBLAST)
-          .then(function(r1){
-            if(r1.length === 0){
-              // ako je poslednje pitanje iz oblasti/lekcije
-              removeLesson(knex, PREDMET, OBLAST);
-            }
-          })
-      })
-      .catch(function(err){
-        if(err) throw err;
-      });
-  }
+        // izbrisi sliku iz "/images/"
+        var p = path.join(process.cwd(), 'images');
+        fs.readdirSync(p, {withFileTypes: true})
+          .filter(function(f){
+            // if the question doesn't have an image,
+            // filter will return an empty array
+            var ext = path.extname(f.name);
+            var fileName = path.basename(f.name, ext)
+            return (fileName === `img${id}`);
+          }).map(function(f){
+            fs.unlinkSync(path.join(p, f.name));
+          });
 
+        // resolve
+    });
+  }
 }
 
 function updateQuestion(knex, id, podaci, win){

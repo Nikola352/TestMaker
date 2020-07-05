@@ -1,0 +1,12 @@
+body{
+  background-color: #00a2e8;
+  font-family: sans-serif;
+  color: #def5ff;
+}
+
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus,
+body:not(.user-is-tabbing) textarea:focus
+body:not(.user-is-tabbing) select:focus {
+  outline: none;
+}

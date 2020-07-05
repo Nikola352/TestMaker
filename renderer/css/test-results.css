@@ -1,0 +1,64 @@
+h1{
+  font-size: 2.2em;
+}
+
+.loading, h1{
+  text-align: center;
+}
+
+.loading img{
+  border-radius: 50%;
+}
+
+div.overview{
+  display: none;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+div.overview p{
+  display: inline-block;
+  margin: 10px 10vw;
+}
+
+.rezultati div.visible > p{
+  display: inline-block;
+  margin: 0 5% 0 5%;
+  font-size: 1.7em;
+}
+
+.rezultati div.visible > p:nth-child(4), .rezultati div.visible > input[type="image"]{
+  float: right;
+}
+
+.rezultati div.visible > p:nth-child(4){
+  margin: 0 10px;
+}
+
+.rezultati div.visible{
+  background-color: #0095d6bb;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.rezultati img{
+  width: 200px;
+}
+
+.rezultati > div.visible > div > div{
+  display: grid;
+  grid-template-columns: 1fr 1fr;;
+}
+
+.rezultati > div.visible > div > div ul{
+  list-style-type: none;
+}
+
+.rezultati > div.visible > div{
+  display: none;
+}
+
+.rezultati input[type="image"]{
+  width: 25px;
+}
