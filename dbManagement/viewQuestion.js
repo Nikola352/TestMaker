@@ -1,5 +1,5 @@
-function createWindow(parentWin){
-  const {BrowserWindow} = require('electron');
+function createWindow(parentWin, contextMenu){
+  const {BrowserWindow, Menu, MenuItem} = require('electron');
 
   var win = new BrowserWindow({
     width: 720,
@@ -19,6 +19,10 @@ function createWindow(parentWin){
 
   win.on('closed', function(){
     win = null;
+  });
+
+  win.webContents.on('context-menu', function(e, params){
+    contextMenu.popup(win);
   });
 
   return win;

@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {app, BrowserWindow, dialog} = electron;
+const {app, BrowserWindow, dialog, Menu} = electron;
 const ipc = electron.ipcMain;
 const path = require('path');
 const events = require('events');
@@ -45,23 +45,22 @@ function createMainWindow(){
   });
 }
 
-
 // IPC handlers
 
 ipc.on('open-newQuest-process', function(e){
-  win.newQuestWin = newQuestion.createWindow(win.mainWin);
+  win.newQuestWin = newQuestion.createWindow(win.mainWin, ctxMenu);
 });
 
 ipc.on('open-viewQuest-process', function(e){
-  win.viewQuestWin = viewQuestion.createWindow(win.mainWin);
+  win.viewQuestWin = viewQuestion.createWindow(win.mainWin, ctxMenu);
 });
 
 ipc.on('open-student-process', function(e){
-  win.studentWin = studentM.createWindow(win.mainWin);
+  win.studentWin = studentM.createWindow(win.mainWin, ctxMenu);
 });
 
 ipc.on('open-startTest-process', function(e){
-  win.startTestWin = testM.createWindow(win.mainWin);
+  win.startTestWin = testM.createWindow(win.mainWin, ctxMenu);
 })
 
 ipc.on('choose-picture', function(e, arg){
@@ -176,9 +175,67 @@ ipc.on('print-login-info', function(e, arg){
 })
 
 
+// Application and Context Menus
+
+const appMenuTemplate = [
+  {role: 'fileMenu'},
+  {
+    label: 'Edit',
+    submenu: [
+      {role: 'cut'},
+      {role: 'copy'},
+      {role: 'paste'},
+      {role: 'delete'},
+      {type: 'separator'},
+      {role: 'selectAll'}
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {role: 'resetZoom'},
+      {role: 'zoomIn'},
+      {role: 'zoomOut'},
+      {type: 'separator'},
+      {role: 'togglefullscreen'},
+      {type: 'separator'},
+      {role: 'toggleDevTools'}
+    ]
+  },
+  {
+    label: 'Help',
+    click: function(){
+      console.log('Help');
+    }
+  }
+
+]
+const appMenu = Menu.buildFromTemplate(appMenuTemplate);
+
+const ctxMenuTemplate = [
+  {role: 'cut', accelerator: 'CmdOrCtrl+x'},
+  {role: 'copy', accelerator: 'CmdOrCtrl+c'},
+  {role: 'paste', accelerator: 'CmdOrCtrl+v'},
+  {role: 'delete'},
+  {role: 'selectAll', accelerator: 'CmdOrCtrl+a'},
+  {type: 'separator'},
+  {role: 'minimize'},
+  {role: 'close'}
+]
+const ctxMenu = Menu.buildFromTemplate(ctxMenuTemplate);
+
 // Application lifecycle
 
-app.on('ready', createMainWindow);
+app.on('ready', function(){
+  createMainWindow();
+
+  Menu.setApplicationMenu(appMenu);
+
+  win.mainWin.webContents.on('context-menu', function(){
+    ctxMenu.popup(win.mainWin);
+  });
+
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {

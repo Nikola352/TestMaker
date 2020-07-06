@@ -1,4 +1,4 @@
-function createWindow(parentWin){
+function createWindow(parentWin, contextMenu){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
@@ -16,6 +16,10 @@ function createWindow(parentWin){
   win.loadFile('./renderer/classes.html');
 
   win.on('ready-to-show', win.show);
+
+  win.webContents.on('context-menu', function(e, params){
+    contextMenu.popup(win);
+  });
 
   win.on('closed', function(){
     win = null;
