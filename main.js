@@ -7,14 +7,8 @@ const newQuestion = require('./dbManagement/newQuestion');
 const viewQuestion = require('./dbManagement/viewQuestion');
 const studentM = require('./dbManagement/studentManagement');
 const testM = require('./server/test');
-// database
-const knex = require('knex')({
-  client: 'sqlite3',
-  connection:{
-    filename: 'data.sqlite3'
-  },
-  useNullAsDefault: true
-});
+const knexSetup = require('./dbManagement/db-setup');
+var knex; // initialized when the app is ready
 
 // Windows
 var win = {
@@ -227,6 +221,8 @@ const ctxMenu = Menu.buildFromTemplate(ctxMenuTemplate);
 // Application lifecycle
 
 app.on('ready', function(){
+  knex = knexSetup(app);
+
   createMainWindow();
 
   Menu.setApplicationMenu(appMenu);

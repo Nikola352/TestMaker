@@ -1,13 +1,20 @@
 {
   "name": "testmaker",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "install-app-deps"
+    "postinstall": "install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "electron-builder build",
+    "release": "build"
   },
-  "author": "Nikola Jolovic",
+  "author": {
+    "name": "Nikola Jolovic",
+    "email": "nikolajolovic02@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "electron": "^7.1.7",
@@ -22,5 +29,28 @@
     "knex": "^0.20.6",
     "socket.io": "^2.3.0",
     "sqlite3": "^4.1.1"
+  },
+  "build": {
+    "appId": "id.nikola.test.maker",
+    "productName": "Test Maker",
+    "copyright": "Copyright © 2020 Nikola Jolovic",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": {
+        "target": "nsis",
+        "arch": ["x64", "ia32"]
+      },
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "build/installerIcon.ico",
+      "uninstallerIcon": "build/uninstallerIcon.ico"
+    }
   }
 }

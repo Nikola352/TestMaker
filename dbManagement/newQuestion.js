@@ -35,9 +35,11 @@ function newQuestion(knex, podaci, win){
   knex('sqlite_sequence').select('*').where('name','=','Pitanja')
     .then(function(rows) {
       // id pitanja koje treba da se unese
-      var id = rows[0]['seq'] + 1;
+      var id;
+      if(rows[0] == null){id = 1}
+      else{id = rows[0]['seq'] + 1;}
 
-      if(podaci.slika != '../images/default.png')
+      if(podaci.slika != '../assets/default.png')
         podaci.slika = savePicture(podaci.slika, id);
 
       knex('Pitanja').insert(podaci).into('Pitanja')
@@ -102,7 +104,13 @@ function newQuestion(knex, podaci, win){
       win.close();
       win = null;
 
-    }).catch(function(err){if(err) throw err});
+    }).catch(function(err){
+      console.log(err);
+      if(err){
+        dialog.showErrorBox('Грешка',
+          'Дошло је до грешке при чувању питања у базу података.');
+      }
+    });
 
 }
 
@@ -110,21 +118,19 @@ function savePicture(oldPath, id){
   const fs = require('fs');
   const path = require('path');
   const process = require('process');
+  const {app} = require('electron');
 
-  var ext = path.extname(oldPath); // extension
-  var newFileName =  `img${id}${ext}`;
-  // copy image to "root/images" directory
-  fs.copyFile(oldPath, path.join(process.cwd(),'images', newFileName),
-    function(err) {
-      if(err) throw err;
+  const ext = path.extname(oldPath);
+  const newPath = path.join(app.getPath('userData'), 'images', `img${id}${ext}`);
+  fs.copyFile(oldPath, newPath, function(err){
+    if(err) console.log(err);
   });
 
-
-  return ('../images/' + newFileName);
+  return newPath;
 }
 
-module.exports =
-{
+module.exports = {
   createWindow: createWindow,
-  newQuestion: newQuestion
+  newQuestion: newQuestion,
+  savePicture: savePicture
 }

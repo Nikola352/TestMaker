@@ -91,7 +91,7 @@ function removeLesson(knex, predmet, oblast){
 }
 
 function removeQuestion(knex, id, win){
-  const {dialog} = require('electron');
+  const {dialog, app} = require('electron');
   const fs = require('fs');
   const path = require('path');
   const process = require('process');
@@ -141,7 +141,10 @@ function removeQuestion(knex, id, win){
                 })
             })
             .catch(function(err){
-              if(err) throw err;
+              if(err){
+                dialog.showErrorBox('Грешка',
+                  'Дошло је до грешке при уклањању питања из базе података.');
+              }
             });
         })
         .catch(function(err) {
@@ -149,7 +152,7 @@ function removeQuestion(knex, id, win){
         });
 
         // izbrisi sliku iz "/images/"
-        var p = path.join(process.cwd(), 'images');
+        var p = path.join(app.getPath('userData'), 'images');
         fs.readdirSync(p, {withFileTypes: true})
           .filter(function(f){
             // if the question doesn't have an image,
@@ -169,6 +172,8 @@ function removeQuestion(knex, id, win){
 function updateQuestion(knex, id, podaci, win){
   const {dialog} = require('electron');
 
+  podaci.slika = require('./newQuestion').savePicture(podaci.slika, id);
+
   knex('Pitanja')
     .where('id', '=', id)
     .update(podaci)
@@ -179,7 +184,12 @@ function updateQuestion(knex, id, podaci, win){
         message: 'Питање је успјешно сачувано у бази података'
       });
     })
-    .catch(function(){if(err) throw err;});
+    .catch(function(err){
+      if(err){
+        dialog.showErrorBox('Грешка',
+          'Дошло је до грешке при чувању питања у базу података.');
+      }
+    });
 }
 
 module.exports = {

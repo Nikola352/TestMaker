@@ -53,6 +53,7 @@ function generatePasswords(ucenici){
 }
 
 async function chooseQuestions(knex, testInfo, loginInfo){
+  const path = require('path');
   // returns an object
   // keys are students' usernames
   // values are lists of question objects
@@ -75,6 +76,10 @@ async function chooseQuestions(knex, testInfo, loginInfo){
         try {
           arr.forEach((quest, i) => {
             quest.odgovori = quest.odgovori.split('&|&').slice(0,-1);
+            if(quest.slika != '../assets/default.png'){
+              let ext = path.extname(quest.slika);
+              quest.slika = 'img' + quest.id + ext;
+            }
           });
         } catch (e) {
           console.log('Ignore this?  ', e);

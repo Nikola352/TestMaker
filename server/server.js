@@ -5,6 +5,7 @@ const path = require('path');
 const os = require('os');
 const ifaces = os.networkInterfaces();
 const socketio = require('socket.io');
+const electronApp = require('electron').app;
 
 // lookup computers address
 var IP_ADDRESS;
@@ -24,7 +25,7 @@ function getIP() {
 }
 
 var TEST_STARTED = false;  // true when test is in progress
-var answers = {}; 
+var answers = {};
 var finished = {};  // username: boolean
 var submissionCount = 0;
 var loginCount = 0;
@@ -43,8 +44,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(sessionMiddleware);
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(express.static('images'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(electronApp.getPath('userData'), 'images')));
 
 app.get('/', function(req, res) {
   if(req.session.loggedin === true){

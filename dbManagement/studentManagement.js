@@ -44,7 +44,7 @@ function addClass(knex, arg, win){
   const {dialog} = require('electron');
 
   knex('Razredi')
-    .insert({razred: arg})
+    .insert({razred: arg, brojUcenika: 0})
     .into('Razredi')
     .then(function() {
       dialog.showMessageBox(win, { // Prikazi poruku o uspjesnoj akciji
@@ -53,9 +53,12 @@ function addClass(knex, arg, win){
         message: 'Одјељење је успјешно додато у базу података'
       });
     })
-    .catch(function(err) {
-      if(err) throw err;
-    })
+    .catch(function(err){
+      if(err){
+        dialog.showErrorBox('Грешка',
+          'Дошло је до грешке при додавању одјељења у базу података.');
+      }
+    });
 }
 
 function removeClass(knex, arg, win){
@@ -88,7 +91,10 @@ function removeClass(knex, arg, win){
             });
           })
           .catch(function(err){
-            if(err) throw err;
+            if(err){
+              dialog.showErrorBox('Грешка',
+                'Дошло је до грешке при уклањању одјељења из базе података.');
+            }
           });
       })
       .catch(function(err){
@@ -128,7 +134,10 @@ function addStudent(knex, podaci, win){
       })
     })
     .catch(function(err){
-      if(err) throw err;
+      if(err){
+        dialog.showErrorBox('Грешка',
+          'Дошло је до грешке при чувању података ученика.');
+      }
     });
 
   // uvecaj broj ucenika u razredu za 1
@@ -137,7 +146,7 @@ function addStudent(knex, podaci, win){
     .then(function(rows){
       knex('Razredi')
         .where('razred','=',podaci.razred)
-        .update({brUcenika: Number(rows[0]['brUcenika'])+1})
+        .update({brojUcenika: Number(rows[0].brojUcenika)+1})
         .then(function(){null})
         .catch(function(err){if(err)throw err;});
     })
@@ -170,7 +179,10 @@ function removeStudent(knex, id, razred, win){
           message: 'Подаци о ученику су успјешно уклоњени из базе података'
         });
       }).catch(function(err){
-        if(err) throw err;
+        if(err){
+          dialog.showErrorBox('Грешка',
+            'Дошло је до грешке при уклањању података.');
+        }
       });
 
       // umanji broj ucenika u razredu za 1
@@ -179,7 +191,7 @@ function removeStudent(knex, id, razred, win){
         .then(function(rows){
           knex('Razredi')
             .where('razred','=',razred)
-            .update({brUcenika: Number(rows[0]['brUcenika'])-1})
+            .update({brojUcenika: Number(rows[0]['brojUcenika'])-1})
             .then(function(){null})
             .catch(function(err){if(err)throw err;});
         })
@@ -202,7 +214,12 @@ function updateStudent(knex, id, podaci, win){
         message: 'Подаци о ученику су успјешно сачувани у бази података'
       });
     })
-    .catch(function(){if(err) throw err;});
+    .catch(function(err){
+      if(err){
+        dialog.showErrorBox('Грешка',
+          'Дошло је до грешке при чувању података.');
+      }
+    });
 }
 
 function showTestResults(knex, id, parentWin){

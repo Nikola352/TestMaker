@@ -67,3 +67,7 @@ p.timer{
   text-align: center;
   font-size: 1.5em;
 }
+
+img[src="../assets/default.png"]{
+  display: none;
+}
