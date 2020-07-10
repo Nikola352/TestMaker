@@ -65,7 +65,6 @@
     "private": true,
     "owner": "Nikola352",
     "provider": "github",
-    "publishAutoUpdate": true,
-    "GH_TOKEN": "33dc19d5fb8a354477ca4f023e9e688b5f28fa9d"
+    "publishAutoUpdate": true
   }
 }
