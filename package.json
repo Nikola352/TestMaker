@@ -2,6 +2,10 @@
   "name": "testmaker",
   "version": "0.0.1",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nikola352/TestMaker"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,7 +13,8 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "electron-builder build",
-    "release": "build"
+    "release": "build",
+    "publish": "build -p always"
   },
   "author": {
     "name": "Nikola Jolovic",
@@ -22,6 +27,7 @@
   },
   "dependencies": {
     "ejs": "^3.0.2",
+    "electron-updater": "^4.3.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "html-pdf": "^2.2.0",
@@ -40,7 +46,10 @@
     "win": {
       "target": {
         "target": "nsis",
-        "arch": ["x64", "ia32"]
+        "arch": [
+          "x64",
+          "ia32"
+        ]
       },
       "icon": "build/icon.ico"
     },
@@ -51,6 +60,12 @@
       "createStartMenuShortcut": true,
       "installerIcon": "build/installerIcon.ico",
       "uninstallerIcon": "build/uninstallerIcon.ico"
-    }
+    },
+    "repo": "TestMaker",
+    "private": true,
+    "owner": "Nikola352",
+    "provider": "github",
+    "publishAutoUpdate": true,
+    "GH_TOKEN": "33dc19d5fb8a354477ca4f023e9e688b5f28fa9d"
   }
 }

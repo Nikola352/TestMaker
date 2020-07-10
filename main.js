@@ -9,6 +9,7 @@ const studentM = require('./dbManagement/studentManagement');
 const testM = require('./server/test');
 const knexSetup = require('./dbManagement/db-setup');
 var knex; // initialized when the app is ready
+const {autoUpdater} = require('electron-updater');
 
 // Windows
 var win = {
@@ -38,6 +39,92 @@ function createMainWindow(){
     //app.quit();
   });
 }
+
+
+// Application and Context Menus
+
+const appMenuTemplate = [
+  {role: 'fileMenu'},
+  {
+    label: 'Edit',
+    submenu: [
+      {role: 'cut'},
+      {role: 'copy'},
+      {role: 'paste'},
+      {role: 'delete'},
+      {type: 'separator'},
+      {role: 'selectAll'}
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {role: 'resetZoom'},
+      {role: 'zoomIn'},
+      {role: 'zoomOut'},
+      {type: 'separator'},
+      {role: 'togglefullscreen'},
+      {type: 'separator'},
+      {role: 'toggleDevTools'}
+    ]
+  },
+  {
+    label: 'Help',
+    click: function(){
+      console.log('Help');
+    }
+  }
+
+]
+const appMenu = Menu.buildFromTemplate(appMenuTemplate);
+
+const ctxMenuTemplate = [
+  {role: 'cut', accelerator: 'CmdOrCtrl+x'},
+  {role: 'copy', accelerator: 'CmdOrCtrl+c'},
+  {role: 'paste', accelerator: 'CmdOrCtrl+v'},
+  {role: 'delete'},
+  {role: 'selectAll', accelerator: 'CmdOrCtrl+a'},
+  {type: 'separator'},
+  {role: 'minimize'},
+  {role: 'close'}
+]
+const ctxMenu = Menu.buildFromTemplate(ctxMenuTemplate);
+
+
+// Application lifecycle
+
+app.on('ready', function(){
+  autoUpdater.checkForUpdatesAndNotify();
+
+  knex = knexSetup(app);
+
+  createMainWindow();
+
+  Menu.setApplicationMenu(appMenu);
+
+  win.mainWin.webContents.on('context-menu', function(){
+    ctxMenu.popup(win.mainWin);
+  });
+
+});
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', function() {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (win.mainWin === null) {
+    createMainWindow()
+  }
+})
+
 
 // IPC handlers
 
@@ -166,86 +253,4 @@ ipc.on('end-test', function(){
 
 ipc.on('print-login-info', function(e, arg){
   testM.printLoginInfo(arg, win.startTestWin);
-})
-
-
-// Application and Context Menus
-
-const appMenuTemplate = [
-  {role: 'fileMenu'},
-  {
-    label: 'Edit',
-    submenu: [
-      {role: 'cut'},
-      {role: 'copy'},
-      {role: 'paste'},
-      {role: 'delete'},
-      {type: 'separator'},
-      {role: 'selectAll'}
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {role: 'resetZoom'},
-      {role: 'zoomIn'},
-      {role: 'zoomOut'},
-      {type: 'separator'},
-      {role: 'togglefullscreen'},
-      {type: 'separator'},
-      {role: 'toggleDevTools'}
-    ]
-  },
-  {
-    label: 'Help',
-    click: function(){
-      console.log('Help');
-    }
-  }
-
-]
-const appMenu = Menu.buildFromTemplate(appMenuTemplate);
-
-const ctxMenuTemplate = [
-  {role: 'cut', accelerator: 'CmdOrCtrl+x'},
-  {role: 'copy', accelerator: 'CmdOrCtrl+c'},
-  {role: 'paste', accelerator: 'CmdOrCtrl+v'},
-  {role: 'delete'},
-  {role: 'selectAll', accelerator: 'CmdOrCtrl+a'},
-  {type: 'separator'},
-  {role: 'minimize'},
-  {role: 'close'}
-]
-const ctxMenu = Menu.buildFromTemplate(ctxMenuTemplate);
-
-// Application lifecycle
-
-app.on('ready', function(){
-  knex = knexSetup(app);
-
-  createMainWindow();
-
-  Menu.setApplicationMenu(appMenu);
-
-  win.mainWin.webContents.on('context-menu', function(){
-    ctxMenu.popup(win.mainWin);
-  });
-
-});
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function() {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', function() {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (win.mainWin === null) {
-    createMainWindow()
-  }
 })
