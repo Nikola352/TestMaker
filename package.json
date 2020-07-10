@@ -60,11 +60,6 @@
       "createStartMenuShortcut": true,
       "installerIcon": "build/installerIcon.ico",
       "uninstallerIcon": "build/uninstallerIcon.ico"
-    },
-    "repo": "TestMaker",
-    "private": true,
-    "owner": "Nikola352",
-    "provider": "github",
-    "publishAutoUpdate": true
+    }
   }
 }
