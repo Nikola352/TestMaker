@@ -13,8 +13,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build": "electron-builder build",
-    "release": "build",
-    "publish": "build -p always"
+    "publish": "electron-builder build -p always"
   },
   "author": {
     "name": "Nikola Jolovic",
