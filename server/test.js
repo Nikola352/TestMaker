@@ -6,7 +6,7 @@ function createWindow(parentWin, contextMenu){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
-    width: 670,
+    width: 680,
     height: 725,
     minWidth: 450,
     parent: parentWin,

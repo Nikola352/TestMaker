@@ -226,7 +226,7 @@ function showTestResults(knex, id, parentWin){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
-    width: 585,
+    width: 590,
     height: 600,
     parent: parentWin,
     modal: true,
