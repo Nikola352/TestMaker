@@ -1,5 +1,7 @@
 const electron = require('electron');
 const ipc = electron.ipcRenderer;
+const remote = electron.remote;
+const {Menu, MenuItem} = remote;
 window.$ = window.jQuery = require('jquery');
 
 var slova = 'абвгдђежзијклљмнњопрстћуфхцчџш';
@@ -13,6 +15,40 @@ var FILTERS = {
 var isInitialData = true;
 var onPredmetChange = false;
 var onSearch = false;
+
+const menuTemplate = [
+  {role: 'cut', accelerator: 'CmdOrCtrl+x'},
+  {role: 'copy', accelerator: 'CmdOrCtrl+c'},
+  {role: 'paste', accelerator: 'CmdOrCtrl+v'},
+  {role: 'delete'},
+  {role: 'selectAll', accelerator: 'CmdOrCtrl+a'},
+  {type: 'separator'},
+  {role: 'minimize'},
+  {role: 'close'}
+]
+
+// dinamically (re)create the context menu
+window.addEventListener('contextmenu', function(e){
+  e.preventDefault();
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  if($(e.target).hasClass('ctx-img')  // user clicked on the image
+  && $(e.target).parent().hasClass('enabled')){  // and editing is allowed
+    menu.append(new MenuItem({type: 'separator'}));
+    menu.append(new MenuItem({
+      label: 'Промијени слику',
+      click: function(){
+        ipc.send('choose-picture');
+      }
+    }));
+    menu.append(new MenuItem({
+      label: 'Уклони слику',
+      click: function(){
+        $(e.target).attr('src', '../assets/default.png');
+      }
+    }));
+  }
+  menu.popup();
+});
 
 $(document).ready(function(){
   ipc.send('get-subj-data');
@@ -65,7 +101,7 @@ function backToDisabled($div){
   .unbind('click')
   .on('click', removeQuestion);
 
-  $div.css('background-color', 'inherit');
+  $div.removeClass('enabled').css('background-color', 'inherit');
   $div.find('input[type="text"], input[type="checkbox"], input.brBodova, textarea').each(function(i){
     // disable all input elems
     $(this).attr('disabled', 'disabled');
@@ -75,7 +111,7 @@ function backToDisabled($div){
 }
 
 function updateQuestion() {
-  $div = $(this).parent();
+  $div = $(this).parent().addClass('enabled');
   $div.css('background-color', '#008ac6');
   $div.find('input[disabled="disabled"], textarea').each(function(i){
     // enable all input elems
@@ -175,6 +211,7 @@ function displayQuestions() {
       .appendTo($div);
 
     $('<img>')
+      .addClass('ctx-img')
       .attr('src',row['slika'])
       .appendTo($div);
 

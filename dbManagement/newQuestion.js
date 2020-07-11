@@ -6,7 +6,7 @@ function createWindow(parentWin, contextMenu){
     height: 785,
     parent: parentWin,
     modal: true,
-    //resizable: false,
+    resizable: false,
     show: false,
     resizable: false,
     webPreferences: {

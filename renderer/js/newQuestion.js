@@ -84,7 +84,7 @@ ipc.on('picture-path-ready', function(e, arg){
 });
 
 $('button.vrati-sliku').on('click', function(){
-  $('.podaci img').attr('src', '../images/default.png');
+  $('.podaci img').attr('src', '../assets/default.png');
   $(this).css('display', 'none');
 });
 

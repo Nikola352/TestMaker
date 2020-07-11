@@ -1,4 +1,4 @@
-function createWindow(parentWin, contextMenu){
+function createWindow(parentWin){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
@@ -16,10 +16,6 @@ function createWindow(parentWin, contextMenu){
   win.loadFile('./renderer/classes.html');
 
   win.on('ready-to-show', win.show);
-
-  win.webContents.on('context-menu', function(e, params){
-    contextMenu.popup(win);
-  });
 
   win.on('closed', function(){
     win = null;
@@ -226,7 +222,7 @@ function showTestResults(knex, id, parentWin){
   const {BrowserWindow} = require('electron');
 
   var win = new BrowserWindow({
-    width: 590,
+    width: 600,
     height: 600,
     parent: parentWin,
     modal: true,

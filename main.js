@@ -133,7 +133,7 @@ ipc.on('open-newQuest-process', function(e){
 });
 
 ipc.on('open-viewQuest-process', function(e){
-  win.viewQuestWin = viewQuestion.createWindow(win.mainWin, ctxMenu);
+  win.viewQuestWin = viewQuestion.createWindow(win.mainWin);
 });
 
 ipc.on('open-student-process', function(e){
