@@ -1,7 +1,7 @@
 module.exports = function(app){
   const path = require('path');
   const fs = require('fs');
-  const sqlite3 = require('sqlite3');
+//   const sqlite3 = require('sqlite3');
 
   // create 'images' directory
   const imgDir = path.join(app.getPath('userData'), 'images');
@@ -15,7 +15,7 @@ module.exports = function(app){
 
   // set up the database
   const dbDir = path.join(app.getPath('userData'), 'data.sqlite3');
-  const db = new sqlite3.Database(dbDir);
+//   const db = new sqlite3.Database(dbDir);
 
   const knex = require('knex')({
     client: 'sqlite3',

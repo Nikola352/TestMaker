@@ -13,7 +13,8 @@ function createWindow(parentWin, contextMenu){
     modal: true,
     show: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 

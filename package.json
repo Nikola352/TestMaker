@@ -21,19 +21,19 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^7.1.7",
-    "electron-builder": "^21.2.0"
+    "electron": "^25.2.0",
+    "electron-builder": "^23.4.0"
   },
   "dependencies": {
     "ejs": "^3.0.2",
     "electron-updater": "^4.3.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "jquery": "^3.4.1",
-    "knex": "^0.20.6",
+    "knex": "^2.5.0",
     "socket.io": "^2.3.0",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^5.1.6"
   },
   "build": {
     "appId": "id.nikola.test.maker",

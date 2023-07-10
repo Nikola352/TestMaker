@@ -10,7 +10,8 @@ function createWindow(parentWin, contextMenu){
     show: false,
     resizable: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 

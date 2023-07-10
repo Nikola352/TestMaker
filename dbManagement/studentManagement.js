@@ -9,7 +9,8 @@ function createWindow(parentWin){
     modal: true,
     show: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
@@ -227,7 +228,8 @@ function showTestResults(knex, id, parentWin){
     parent: parentWin,
     modal: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
