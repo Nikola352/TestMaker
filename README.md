@@ -18,3 +18,14 @@ npm start
 ```
 
 When the application is started, the teacher interface will be opened. You can then select the option to create new question, preview all created questions, manage students or conduct a test. After the test is started, the student interface will be available on the local network. The student interface can be accessed from any device on the local network by entering the provided URL in the browser.
+
+## Screenshots
+
+![Start screen](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss1.png)
+![New question](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss2.png)
+![Preview questions](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss3.png)
+![Classes](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss4.png)
+![Students](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss5.png)
+![Start test](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss6.png)
+![Student interface](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss7.png)
+![Test results](https://raw.githubusercontent.com/Nikola352/TestMaker/assets/ss8.png)
